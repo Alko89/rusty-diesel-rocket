@@ -4,7 +4,7 @@ extern crate rand;
 use rocket::request::{Form, FlashMessage, FromFormValue};
 use rocket::response::{Redirect, Flash};
 use rocket::http::{Cookie, Cookies, RawStr};
-use rocket_contrib::Template;
+use rocket_contrib::{Template};
 
 use diesel::prelude::*;
 use ::models::user::{User, NewUser};
@@ -37,7 +37,16 @@ impl<'v> FromFormValue<'v> for Identifier {
 pub struct Credentials {
     identifier: Identifier,
     password: String,
+//     coinhive_captcha_token: String
 }
+
+// Coinhive structs
+// #[derive(Serialize, Deserialize, Debug)]
+// pub struct PostData {
+//     secret: String,
+//     token: String,
+//     hashes: i32
+// }
 
 #[post("/login")]
 pub fn logged_user(_user: User) -> Redirect {
@@ -45,10 +54,11 @@ pub fn logged_user(_user: User) -> Redirect {
 }
 
 #[post("/login", data = "<creds>", rank = 2)]
-pub fn login(conn: db::PgSqlConn,
-             mut session: Cookies,
-             creds: Form<Credentials>)
-             -> Flash<Redirect> {
+pub fn login(conn: db::Conn, mut session: Cookies, creds: Form<Credentials>) -> Flash<Redirect> {
+    /* Coinhive CAPTCHA */
+//     println!("{}", creds.get().coinhive_captcha_token);
+    /* End CAPTCHA */
+
     use ::schema::users::dsl::*;
     
     // TODO: FIX
@@ -129,7 +139,7 @@ pub fn registered_user(_user: User) -> Redirect {
 }
 
 #[post("/register", data = "<creds>", rank = 2)]
-pub fn register(conn: db::PgSqlConn, creds: Form<NewUser>) -> Flash<Redirect> {
+pub fn register(conn: db::Conn, creds: Form<NewUser>) -> Flash<Redirect> {
     use ::schema::users;
 
     let salt = rand::thread_rng()

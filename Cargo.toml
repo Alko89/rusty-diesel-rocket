@@ -1,21 +1,22 @@
 [package]
-name = "dieselrocket"
+name = "xmr_webminer"
 version = "0.1.0"
-authors = ["Joshua Rombauer <joshua.rombauer@tum.de>"]
+authors = ["Alko89 <alefer89@gmail.com>"]
 
 [dependencies]
-diesel = { version = "0.12", features = ["postgres"] }
-diesel_codegen = { version = "0.12", features = ["postgres"] }
-r2d2 = "0.7"
-r2d2-diesel = "0.12"
+rocket = { git = "https://github.com/SergioBenitez/Rocket" }
 dotenv = "0.10"
+diesel = { version = "0.14", features = ["postgres"] }
+diesel_codegen = { version = "0.14", features = ["postgres"] }
+r2d2 = "0.7"
+r2d2-diesel = "0.14"
 rust-argon2 = "0.2"
-rocket = "0.3"
-rocket_codegen = "0.3"
 rand = "0.3"
 
-[dependencies.rocket_contrib]
-version = "0.3"
-default_features = false
-features = ["handlebars_templates"]
+[dependencies.rocket_codegen]
+git = "https://github.com/SergioBenitez/Rocket"
 
+[dependencies.rocket_contrib]
+git = "https://github.com/SergioBenitez/Rocket"
+default-features = false
+features = ["tera_templates", "json"]

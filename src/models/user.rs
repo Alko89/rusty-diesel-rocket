@@ -27,7 +27,7 @@ impl<'a, 'r> FromRequest<'a, 'r> for User {
 
     fn from_request(req: &'a Request<'r>) -> request::Outcome<User, ()> {
         use ::schema::users::dsl::*;
-        let conn = match <db::PgSqlConn as FromRequest>::from_request(req) {
+        let conn = match <db::Conn as FromRequest>::from_request(req) {
             Outcome::Success(conn) => conn,
             _ => return Outcome::Forward(()),
         };

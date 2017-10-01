@@ -1,0 +1,23 @@
+{% extends "master" %}
+
+{% block header %}
+      <title>Rocket</title>
+{% endblock header %}
+
+{% block content %}
+      <h1>Please Register</h1>
+      {% if flash %}
+         <p>{{ flash }}</p>
+      {% else %}
+      {% endif %}
+
+      <form action="/register" method="post" accept-charset="utf-8">
+         <label for="username">Username</label>
+         <input type="text" name="username" id="username" placeholder="Username"><br>
+         <label for="email">Email</label>
+         <input type="email" name="email" id="email" placeholder="Email"><br>
+         <label for="password">password</label>
+         <input type="password" name="password" id="password" placeholder="Password">
+         <p><input type="submit" value="Register"> <a href="/login">Login!</a></p>
+      </form>
+{% endblock content %}
