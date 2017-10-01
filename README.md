@@ -3,7 +3,7 @@ A SandBox project with Coinhive miner running in the background when the user lo
 
 ## Running
 
-  1. To configure the database, set the `.env` file with the correct `DATABASE_URL` then run (must have `diesel_cli` installed):
+  1. Configure the database, set the `.env` file with the correct `DATABASE_URL` then run (must have `diesel_cli` installed):
     ```
     diesel migration run
     ```
