@@ -1,5 +1,5 @@
 {
-  "name": "rust-react",
+  "name": "xmr_webminer",
   "version": "0.1.0",
   "repository": "",
   "description": "",
@@ -8,7 +8,7 @@
     "start": "cargo run",
     "build": "cargo build && npm install && node_modules/webpack/bin/webpack.js"
   },
-  "author": "Stefano Ordine <stefano.ordine@gmail.com>",
+  "author": "Alko89 <alefer89@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.21.0",
