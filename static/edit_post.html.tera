@@ -6,7 +6,7 @@
 
 {% block content %}
     {% for post in posts %}
-    <form class="pure-form content" action="/update" method="post">
+    <form class="pure-form content" action="/post/update" method="post">
         <input type="hidden" name="id" value="{{ post.id }}" />
         <div class="header">
             <h1>Add post</h1>

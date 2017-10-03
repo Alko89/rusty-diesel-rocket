@@ -61,8 +61,8 @@ impl<'a, 'b> Context<'a, 'b> {
 fn post(msg: Option<FlashMessage>, conn: db::Conn) -> Template {
     Template::render("index",
         &match msg {
-        Some(ref msg) => Context::one(1, &conn, Some((msg.name(), msg.msg()))),
-        None => Context::one(1, &conn, None),
+        Some(ref msg) => Context::one(0, &conn, Some((msg.name(), msg.msg()))),
+        None => Context::one(0, &conn, None),
         })
 }
 
@@ -78,8 +78,8 @@ fn view_post(id: i32  ,msg: Option<FlashMessage>, conn: db::Conn) -> Template {
 #[get("/add")]
 fn add_post(msg: Option<FlashMessage>, conn: db::Conn) -> Template {
      Template::render("add_post", &match msg {
-        Some(ref msg) => Context::one(1, &conn, Some((msg.name(), msg.msg()))),
-        None => Context::one(1, &conn, None),
+        Some(ref msg) => Context::one(0, &conn, Some((msg.name(), msg.msg()))),
+        None => Context::one(0, &conn, None),
         })
 }
 
