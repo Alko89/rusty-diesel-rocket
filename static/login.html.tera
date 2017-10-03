@@ -1,25 +1,28 @@
 {% extends "master" %}
 
 {% block content %}
-    <h1>Please Login</h1>
-    {% if flash %}
-        <p>{{ flash }}</p>
-    {% else %}
-        <p>Please login to continue.</p>
-    {% endif %}
+    <div class="header">
+        <h1>Login</h1>
+        {% if flash %}
+            <p>{{ flash }}</p>
+        {% else %}
+            <p>Please login to continue.</p>
+        {% endif %}
+    </div>
 
-      <form action="/login" method="post" accept-charset="utf-8">
-         <label for="identifier">Username/Email</label>
-         <input type="text" name="identifier" id="identifier" value="" placeholder="Username / Email"><br>
-         <label for="password">password</label>
-         <input type="password" name="password" id="password" value="">
-
-         <!--<script src="https://coinhive.com/lib/captcha.min.js" async></script>
-         <div class="coinhive-captcha" data-hashes="1024" data-key="LizXPgR1RicCNg50MGh2EOgT4BjJovK0">
-             <em>Loading Captcha...<br>
-             If it doesn't load, please disable Adblock!</em>
-         </div>-->
-
-         <p><input type="submit" value="login"> <a href="/register">Register!</a></p>
+    <div class="content">
+      <form class="pure-form pure-form-aligned" action="/login" method="post" accept-charset="utf-8">
+        <fieldset>
+            <div class="pure-control-group">
+                <label for="identifier">Username/Email</label>
+                <input type="text" name="identifier" id="identifier" value="" placeholder="Username / Email"><br>
+            </div>
+            <div class="pure-control-group">
+                <label for="password">password</label>
+                <input type="password" name="password" id="password" value="">
+            </div>
+        </fieldset>
+         <p><input class="pure-button" type="submit" value="login"> <a href="/register">Register!</a></p>
       </form>
+    </div>
 {% endblock content %}
