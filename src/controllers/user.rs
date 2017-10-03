@@ -105,10 +105,10 @@ pub fn user_index(user: User) -> Template {
     Template::render("index", &context)
 }
 
-#[get("/", rank = 2)]
-fn index() -> Redirect {
-    Redirect::to("/login")
-}
+// #[get("/", rank = 2)]
+// fn index() -> Redirect {
+//     Redirect::to("/login")
+// }
 
 #[get("/register")]
 pub fn register_user(_user: User) -> Redirect {

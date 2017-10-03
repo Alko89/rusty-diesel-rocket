@@ -133,7 +133,7 @@ fn update_post(post_form: Form<Post>, conn: db::Conn) -> Flash<Redirect> {
     }
 }
 
-#[get("/anonymous")]
+#[get("/", rank=2)]
 fn anonymous(flash: Option<FlashMessage>) -> Template {
     let mut context = HashMap::new();  
     //TODO: test if this works

@@ -27,7 +27,7 @@ use controllers::{post as post_controller};
 fn main() {
     rocket::ignite()
         .manage(db::establish_connection())
-        .mount("/", routes![index, user_index,
+        .mount("/", routes![/*index,*/ user_index,
             login_page, login_user, logout, login, logged_user,
             register, registered_user, register_page, register_user,
             static_files::all, post_controller::anonymous
