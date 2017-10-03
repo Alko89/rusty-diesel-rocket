@@ -30,7 +30,7 @@ fn main() {
         .mount("/", routes![index, user_index,
             login_page, login_user, logout, login, logged_user,
             register, registered_user, register_page, register_user,
-            static_files::all
+            static_files::all, post_controller::anonymous
         ])
         .mount("/post", routes![post_controller::post])
         .mount("/post/", routes![post_controller::add_post, post_controller::new_post, post_controller::view_post, post_controller::edit_post, post_controller::update_post])

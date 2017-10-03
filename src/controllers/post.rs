@@ -132,3 +132,14 @@ fn update_post(post_form: Form<Post>, conn: db::Conn) -> Flash<Redirect> {
         Flash::error(Redirect::to("/post/new"), "Whoops! The server failed.")
     }
 }
+
+#[get("/anonymous")]
+fn anonymous(flash: Option<FlashMessage>) -> Template {
+    let mut context = HashMap::new();  
+    //TODO: test if this works
+    if let Some(ref msg) = flash {
+        context.insert("msg", msg.msg());
+    }
+
+    Template::render("anonymous", &context)
+}

@@ -9,3 +9,7 @@ A SandBox project with Coinhive miner running in the background when the user lo
   2. Build: `npm run build`
 
   3. Run: `cargo run`
+
+## TODO:
+
+  - Fix posts
