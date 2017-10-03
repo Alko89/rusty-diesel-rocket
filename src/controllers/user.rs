@@ -78,7 +78,7 @@ pub fn login(conn: db::Conn, mut session: Cookies, creds: Form<Credentials>) -> 
 #[post("/logout")]
 pub fn logout(mut session: Cookies) -> Flash<Redirect> {
     session.remove_private(Cookie::named("user_id"));
-    Flash::success(Redirect::to("/login"), "Logout successful")
+    Flash::success(Redirect::to("/"), "Logout successful")
 }
 
 /// Redirect already logged in users
