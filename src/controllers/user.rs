@@ -40,14 +40,6 @@ pub struct Credentials {
 //     coinhive_captcha_token: String
 }
 
-// Coinhive structs
-// #[derive(Serialize, Deserialize, Debug)]
-// pub struct PostData {
-//     secret: String,
-//     token: String,
-//     hashes: i32
-// }
-
 #[post("/login")]
 pub fn logged_user(_user: User) -> Redirect {
     Redirect::to("/")
