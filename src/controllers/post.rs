@@ -14,7 +14,7 @@ use std::collections::HashMap;
 struct Context<'a, 'b> 
 {
     msg: Option<(&'a str, &'b str)>,
-    titles: Vec<Post>,
+    titles: Vec<String>,
     posts: Vec<Post>
 }
 
@@ -22,44 +22,16 @@ impl<'a, 'b> Context<'a, 'b> {
     pub fn one(id: i32, conn: &db::Conn, msg: Option<(&'a str, &'b str)>) -> Context<'a, 'b> {
         Context{
             msg: msg,
-            titles: Post::all(conn),
+            titles: Post::get_titles(conn),
             posts: Post::post(id, conn)
         }
     }
 }
 
-// #[get("/")]
-// fn post(flash: Option<FlashMessage>, conn: db::Conn) -> Template {
-//     let mut context = HashMap::new();
-//     
-//     //TODO: test if this works
-//     if let Some(ref msg) = flash {
-//         context.insert("msg", msg.msg());
-//     }
-// 
-//     let post = Post::post(0, &conn);
-//     
-//     println!("{:?}", post[0].title);
-//     let title = post[0].title.to_string();
-//     //TODO: kko kopirat tle not?
-//     context.insert("posts", &title.to_string());
-// 
-//     Template::render("view_post", &context)
-//         
-//         /*
-//         let mut context = HashMap::new();
-//         if let Some(ref msg) = flash {
-//             context.insert("flash", msg.msg());
-//         }
-// 
-//         Template::render("login", &context)
-//         
-//         */
-// }
 
 #[get("/")]
 fn post(msg: Option<FlashMessage>, conn: db::Conn) -> Template {
-    Template::render("index",
+    Template::render("view_post",
         &match msg {
         Some(ref msg) => Context::one(0, &conn, Some((msg.name(), msg.msg()))),
         None => Context::one(0, &conn, None),

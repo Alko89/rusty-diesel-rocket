@@ -3,17 +3,31 @@
 {% block header %}
 {% endblock header %}
 
-{% block menu %}
-    {% for title in titles %}
-        <li class="pure-menu-item"><a href="/post/{{ title.id }}" class="pure-menu-link">{{ title.title }}</a></li>
-    {% endfor %}
-{% endblock menu %}
 
 {% block content %}
+
+    <!-- Menu toggle -->
+    <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+    </a>
+
+    <div id="menu">
+        <div class="pure-menu">
+            <a class="pure-menu-heading" href="/">GoOpen</a>
+
+            <ul class="pure-menu-list">
+                {% for title in titles %}
+                    <li class="pure-menu-item"><a href="/post/{{ title }}" class="pure-menu-link">{{ title }}</a></li>
+                 {% endfor %}
+            </ul>
+        </div>
+    </div>
+
     {% for post in posts %}
         <div class="header">
             <h1>{{ post.title }}</h1>
-            <h2>A subtitle for your page goes here</h2>
+            <h2>Hi!</h2>
         </div>
 
         <div class="content">

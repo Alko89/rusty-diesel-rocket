@@ -3,7 +3,6 @@
 extern crate rocket;
 extern crate rocket_contrib;
 
-// extern crate serde_json;
 #[macro_use] extern crate diesel_codegen;
 #[macro_use] extern crate serde_derive;
 
@@ -23,6 +22,7 @@ use rocket_contrib::Template;
 
 use controllers::user::*;
 use controllers::{post as post_controller};
+use controllers::{coinhive as api_controller};
 
 fn main() {
     rocket::ignite()
@@ -32,8 +32,16 @@ fn main() {
             register, registered_user, register_page, register_user,
             static_files::all, post_controller::anonymous
         ])
-        .mount("/post", routes![post_controller::post])
-        .mount("/post/", routes![post_controller::add_post, post_controller::new_post, post_controller::view_post, post_controller::edit_post, post_controller::update_post])
+        .mount("/post", routes![])
+        .mount("/post", routes![
+            post_controller::post,
+            post_controller::add_post,
+            post_controller::new_post,
+            post_controller::view_post,
+            post_controller::edit_post,
+            post_controller::update_post
+        ])
+        .mount("/api", routes![api_controller::test])
         .attach(Template::fairing())
         .launch();
 }
