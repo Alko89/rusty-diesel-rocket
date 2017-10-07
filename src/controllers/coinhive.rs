@@ -37,7 +37,7 @@ fn empty_balance() -> Balance {
 
 #[get("/test")]
 fn test() -> Json<Balance> {
-    let req = reqwest::get("https://api.coinhive.com/user/balance?secret=OMITTED=Anonymous");
+    let req = reqwest::get("https://api.coinhive.com/user/balance?secret=E9NjguaYDdrhkm8XSfPmTV6OmgnBBYr5&name=Anonymous");
 
     match req {
         Ok(mut res) => {
@@ -50,7 +50,7 @@ fn test() -> Json<Balance> {
             //println!("{:?}", response);
 
             if let Ok(request_json) = json::from_str(&body) {
-                if let Some(ref name) = request_json.find("name") {
+                if let Some(ref name) = request_json.find("balance") {
                     Json(Balance {
                         success: true,
                         name: name.to_string(),

@@ -10,7 +10,7 @@
         {% endif %}
     </div>
 
-    <div class="content">
+    <div class="login">
       <form class="pure-form pure-form-aligned" action="/login" method="post" accept-charset="utf-8">
         <fieldset>
             <div class="pure-control-group">
