@@ -12,4 +12,5 @@ A SandBox project with Coinhive miner running in the background when the user lo
 
 ## TODO:
 
-  - Fix posts
+  - Post gui is still wery bad
+  - Get data from coinhive api
