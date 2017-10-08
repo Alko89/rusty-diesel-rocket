@@ -2,6 +2,7 @@
 #![plugin(rocket_codegen)]
 extern crate rocket;
 extern crate rocket_contrib;
+extern crate serde_json;
 extern crate serialize;
 
 #[macro_use] extern crate diesel_codegen;
@@ -42,7 +43,8 @@ fn main() {
             post_controller::edit_post,
             post_controller::update_post
         ])
-        .mount("/api", routes![api_controller::test])
+        .mount("/api", routes![
+            api_controller::get_balance])
         .attach(Template::fairing())
         .launch();
 }

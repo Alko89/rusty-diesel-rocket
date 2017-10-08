@@ -12,5 +12,5 @@ A SandBox project with Coinhive miner running in the background when the user lo
 
 ## TODO:
 
-  - Post gui is still wery bad
-  - Get data from coinhive api
+  - Add captcha to registration
+  - Add more details to the user about his mining stats

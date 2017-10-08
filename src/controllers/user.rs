@@ -1,10 +1,13 @@
 extern crate argon2;
 extern crate rand;
+extern crate reqwest;
+extern crate serde_json;
 
 use rocket::request::{Form, FlashMessage, FromFormValue};
 use rocket::response::{Redirect, Flash};
 use rocket::http::{Cookie, Cookies, RawStr};
 use rocket_contrib::{Template};
+use serde_json::Value;
 
 use diesel::prelude::*;
 use ::models::user::{User, NewUser};
@@ -12,6 +15,8 @@ use std::error::Error;
 use std::collections::HashMap;
 use self::rand::Rng;
 use ::db;
+
+use std::io::Read;
 
 #[derive(Debug)]
 pub enum Identifier {
@@ -37,7 +42,8 @@ impl<'v> FromFormValue<'v> for Identifier {
 pub struct Credentials {
     identifier: Identifier,
     password: String,
-//     coinhive_captcha_token: String
+    #[form(field = "coinhive-captcha-token")]
+    coinhive_captcha_token: String
 }
 
 #[post("/login")]
@@ -47,31 +53,53 @@ pub fn logged_user(_user: User) -> Redirect {
 
 #[post("/login", data = "<creds>", rank = 2)]
 pub fn login(conn: db::Conn, mut session: Cookies, creds: Form<Credentials>) -> Flash<Redirect> {
-    /* Coinhive CAPTCHA */
-//     println!("{}", creds.get().coinhive_captcha_token);
-    /* End CAPTCHA */
+    let captcha_data = [
+        ("secret", "OMITED"),
+        ("token", &creds.get().coinhive_captcha_token),
+        ("hashes", "1024")
+    ];
 
-    use ::schema::users::dsl::*;
-    
-    // TODO: FIX
-    //let user = users.filter(verification_token.eq(None::<String>));
-    let user = match creds.get().identifier {
-        Identifier::Username(ref uname) => users.filter(username.eq(uname)).first(&*conn),
-        Identifier::Email(ref mail) => users.filter(email.eq(mail)).first(&*conn),
-    };
+    let client = reqwest::Client::new();
+    let req = client.post("https://api.coinhive.com/token/verify")
+                .form(&captcha_data)
+                .send();
 
-    let user: User = match user {
-        Err(e) => return Flash::error(Redirect::to("/login"), e.description()),
-        Ok(u) => u,
-    };
+    match req {
+        Ok(mut res) => {
+            let mut body = String::new();
+            res.read_to_string(&mut body);
 
-    match argon2::verify_encoded(&user.password, creds.get().password.as_bytes()) {
-        Err(e) => Flash::error(Redirect::to("/login"), e.description()),
-        Ok(check) if !check => Flash::error(Redirect::to("/login"), "Invalid Password!"),
-        Ok(_) => {
-            session.add_private(Cookie::new("user_id", user.id.to_string()));
-            Flash::success(Redirect::to("/"), "Login successful")
-        }
+            let v: Value = serde_json::from_str(&body).unwrap();
+            println!("{:?}", v);
+            if v["success"] == true {
+                use ::schema::users::dsl::*;
+
+                // TODO: FIX
+                //let user = users.filter(verification_token.eq(None::<String>));
+                let user = match creds.get().identifier {
+                    Identifier::Username(ref uname) => users.filter(username.eq(uname)).first(&*conn),
+                    Identifier::Email(ref mail) => users.filter(email.eq(mail)).first(&*conn),
+                };
+
+                let user: User = match user {
+                    Err(e) => return Flash::error(Redirect::to("/login"), e.description()),
+                    Ok(u) => u,
+                };
+
+                match argon2::verify_encoded(&user.password, creds.get().password.as_bytes()) {
+                    Err(e) => Flash::error(Redirect::to("/login"), e.description()),
+                    Ok(check) if !check => Flash::error(Redirect::to("/login"), "Invalid Password!"),
+                    Ok(_) => {
+                        session.add_private(Cookie::new("user_id", user.id.to_string()));
+                        Flash::success(Redirect::to("/"), "Login successful")
+                    }
+                }
+            }
+            else {
+                Flash::error(Redirect::to("/login"), "Are you human?")
+            }
+        },
+        Err(e) => Flash::error(Redirect::to("/login"), "Captcha error.")
     }
 }
 

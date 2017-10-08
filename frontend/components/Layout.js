@@ -19,8 +19,9 @@ export default class Layout extends React.Component {
     render() {
         setTimeout(() => {
             self = this;
+            var url = "/api/balance/" + $("#name").text();
 
-            $.getJSON("http://0.0.0.0:8001/api/test", function(data) {
+            $.getJSON(url, function(data) {
                 if(data.success)
                     self.setState({
                         name: data.name,
@@ -35,16 +36,13 @@ export default class Layout extends React.Component {
         return (
             <div class="pure-g">
                 <div class="pure-u-1">
-                    { this.state.name }
+                    You have mined:
                 </div>
                 <div class="pure-u-1">
-                    { this.state.total }
+                    { this.state.total } hashes
                 </div>
                 <div class="pure-u-1">
-                    { this.state.withdrawn }
-                </div>
-                <div class="pure-u-1">
-                    { this.state.balance }
+                    so far.
                 </div>
                 <div class="pure-u-1">
                     { this.state.error }
