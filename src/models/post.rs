@@ -5,12 +5,18 @@ use diesel::pg::PgConnection;
 use ::schema::posts;
 
 #[table_name = "posts"]
-#[derive(Serialize, Queryable, Insertable, FromForm, Debug, Clone)]
+#[derive(Serialize, Queryable, Insertable, FromForm, Debug)]
 pub struct Post {
     pub id: i32,
     pub title: String,
     pub body: String,
     pub published: bool,
+}
+
+#[derive(Serialize, Debug)]
+pub struct Title {
+    id: i32,
+    title: String
 }
 
 
@@ -19,8 +25,18 @@ impl Post {
         posts::table.order(posts::id.desc()).load::<Post>(conn).unwrap()
     }
     
-    pub fn get_titles(conn: &PgConnection) -> Vec<String> {
-        posts::table.select(posts::title).load(conn).unwrap()
+    pub fn get_titles(conn: &PgConnection) -> Vec<Title> {
+        let mut titles = Vec::new();
+
+        // TODO: how to get only id and title from database with DIesel.rs?
+        for post in posts::table.order(posts::id.desc()).load::<Post>(conn).unwrap() {
+            titles.push(Title{
+                id: post.id,
+                title: post.title
+            });
+        }
+
+        titles
     }
     
     pub fn post(id: i32, conn: &PgConnection) -> Vec<Post> {

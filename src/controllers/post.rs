@@ -10,7 +10,6 @@ use tera::Context;
 use ::db;
 use ::models::post::Post;
 use ::models::user::User;
-use std::collections::HashMap;
 
 
 #[get("/")]

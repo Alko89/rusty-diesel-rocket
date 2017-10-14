@@ -31,7 +31,7 @@
     
             <ul class="pure-menu-list">
                 {% for title in titles %}
-                    <li class="pure-menu-item"><a href="/post/{{ title }}" class="pure-menu-link">{{ title }}</a></li>
+                    <li class="pure-menu-item"><a href="/post/{{ title.id }}" class="pure-menu-link">{{ title.title }}</a></li>
                 {% endfor %}
                 {% if logged_in %}
                     <li class="pure-menu-item">
