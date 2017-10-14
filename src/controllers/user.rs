@@ -56,7 +56,7 @@ pub fn login(conn: db::Conn, mut session: Cookies, creds: Form<Credentials>) -> 
     let captcha_data = [
         ("secret", "OMITED"),
         ("token", &creds.get().coinhive_captcha_token),
-        ("hashes", "1024")
+        ("hashes", "256")
     ];
 
     let client = reqwest::Client::new();

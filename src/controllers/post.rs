@@ -1,62 +1,67 @@
 extern crate rocket;
 extern crate rocket_contrib;
+extern crate tera;
 
 use rocket::request::{Form, FlashMessage};
 use rocket::response::{Flash, Redirect};
 use rocket_contrib::{Template};
+use tera::Context;
 
 use ::db;
 use ::models::post::Post;
+use ::models::user::User;
 use std::collections::HashMap;
 
 
-#[derive(Debug, Serialize)]
-struct Context<'a, 'b> 
-{
-    msg: Option<(&'a str, &'b str)>,
-    titles: Vec<String>,
-    posts: Vec<Post>
-}
-
-impl<'a, 'b> Context<'a, 'b> {
-    pub fn one(id: i32, conn: &db::Conn, msg: Option<(&'a str, &'b str)>) -> Context<'a, 'b> {
-        Context{
-            msg: msg,
-            titles: Post::get_titles(conn),
-            posts: Post::post(id, conn)
-        }
-    }
-}
-
-
 #[get("/")]
-fn post(msg: Option<FlashMessage>, conn: db::Conn) -> Template {
-    Template::render("view_post",
-        &match msg {
-        Some(ref msg) => Context::one(0, &conn, Some((msg.name(), msg.msg()))),
-        None => Context::one(0, &conn, None),
-        })
+fn index(_user: User, msg: Option<FlashMessage>, conn: db::Conn) -> Template {
+    show_post(0, msg, conn, true)
+}
+
+#[get("/", rank = 2)]
+fn guest_index(msg: Option<FlashMessage>, conn: db::Conn) -> Template {
+    show_post(0, msg, conn, false)
 }
 
 #[get("/<id>")]
-fn view_post(id: i32  ,msg: Option<FlashMessage>, conn: db::Conn) -> Template {
-    Template::render("view_post",
-        &match msg {
-        Some(ref msg) => Context::one(id, &conn, Some((msg.name(), msg.msg()))),
-        None => Context::one(id, &conn, None),
-        })
+fn view_post(_user: User, id: i32, msg: Option<FlashMessage>, conn: db::Conn) -> Template {
+    show_post(id, msg, conn, true)
+}
+
+#[get("/<id>", rank = 2)]
+fn guest_post(id: i32, msg: Option<FlashMessage>, conn: db::Conn) -> Template {
+    show_post(id, msg, conn, false)
+}
+
+fn show_post(id: i32, msg: Option<FlashMessage>, conn: db::Conn, logged_in: bool) -> Template {
+    let mut target = Context::new();
+    match msg {
+        Some(ref msg) => target.add("msg", &Some((msg.name(), msg.msg()))),
+        None => {}
+    };
+
+    target.add("titles", &Post::get_titles(&conn));
+    target.add("posts", &Post::post(id, &conn));
+    target.add("logged_in", &logged_in);
+
+    Template::render("view_post", target)
 }
 
 #[get("/add")]
-fn add_post(msg: Option<FlashMessage>, conn: db::Conn) -> Template {
-     Template::render("add_post", &match msg {
-        Some(ref msg) => Context::one(0, &conn, Some((msg.name(), msg.msg()))),
-        None => Context::one(0, &conn, None),
-        })
+fn add_post(_user: User, msg: Option<FlashMessage>, conn: db::Conn) -> Template {
+    let mut target = Context::new();
+    match msg {
+        Some(ref msg) => target.add("msg", &Some((msg.name(), msg.msg()))),
+        None => {}
+    };
+
+    target.add("titles", &Post::get_titles(&conn));
+
+    Template::render("add_post", target)
 }
 
 #[post("/new", data = "<post_form>")]
-fn new_post(post_form: Form<Post>, conn: db::Conn) -> Flash<Redirect> {
+fn new_post(user: User, post_form: Form<Post>, conn: db::Conn) -> Flash<Redirect> {
     let post = post_form.into_inner();
     if post.title.is_empty()
     {
@@ -77,15 +82,21 @@ fn new_post(post_form: Form<Post>, conn: db::Conn) -> Flash<Redirect> {
 }
 
 #[get("/edit/<id>")]
-fn edit_post(id: i32, msg: Option<FlashMessage>, conn: db::Conn) -> Template {
-     Template::render("edit_post", &match msg {
-        Some(ref msg) => Context::one(id, &conn, Some((msg.name(), msg.msg()))),
-        None => Context::one(id, &conn, None),
-        })
+fn edit_post(user: User, id: i32, msg: Option<FlashMessage>, conn: db::Conn) -> Template {
+    let mut target = Context::new();
+    match msg {
+        Some(ref msg) => target.add("msg", &Some((msg.name(), msg.msg()))),
+        None => {}
+    };
+
+    target.add("titles", &Post::get_titles(&conn));
+    target.add("posts", &Post::post(id, &conn));
+
+    Template::render("edit_post", target)
 }
 
 #[post("/update", data = "<post_form>")]
-fn update_post(post_form: Form<Post>, conn: db::Conn) -> Flash<Redirect> {
+fn update_post(user: User, post_form: Form<Post>, conn: db::Conn) -> Flash<Redirect> {
     let post = post_form.into_inner();
     if post.title.is_empty()
     {

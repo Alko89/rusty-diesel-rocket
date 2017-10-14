@@ -33,6 +33,15 @@
                 {% for title in titles %}
                     <li class="pure-menu-item"><a href="/post/{{ title }}" class="pure-menu-link">{{ title }}</a></li>
                 {% endfor %}
+                {% if logged_in %}
+                    <li class="pure-menu-item">
+                        <form class="pure-form" action="/logout" method="post" accept-charset="utf-8">
+                            <input class="pure-menu-link" type="submit" name="logout" id="logout" value="logout" />
+                        </form>
+                    </li>
+                {% else %}
+                    <li class="pure-menu-item"><a href="/login" class="pure-menu-link">Login</a></li>
+                {% endif %}
             </ul>
         </div>
     </div>

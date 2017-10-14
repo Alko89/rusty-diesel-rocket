@@ -1,12 +1,12 @@
-#![feature(plugin, decl_macro, custom_derive, const_fn, rustc_private, custom_attribute)]
+#![feature(plugin, decl_macro, custom_derive, const_fn)]
 #![plugin(rocket_codegen)]
 extern crate rocket;
 extern crate rocket_contrib;
 extern crate serde_json;
-extern crate serialize;
 
 #[macro_use] extern crate diesel_codegen;
 #[macro_use] extern crate serde_derive;
+#[macro_use] extern crate tera;
 
 mod schema;
 mod models;
@@ -36,10 +36,12 @@ fn main() {
         ])
         .mount("/post", routes![])
         .mount("/post", routes![
-            post_controller::post,
+            post_controller::index,
+            post_controller::guest_index,
             post_controller::add_post,
             post_controller::new_post,
             post_controller::view_post,
+            post_controller::guest_post,
             post_controller::edit_post,
             post_controller::update_post
         ])

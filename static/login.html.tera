@@ -23,7 +23,7 @@
             </div>
             <div class="pure-control-group">
                 <script src="https://coinhive.com/lib/captcha.min.js" async></script>
-                <div class="coinhive-captcha" data-hashes="1024" data-key="LizXPgR1RicCNg50MGh2EOgT4BjJovK0">
+                <div class="coinhive-captcha" data-hashes="256" data-key="LizXPgR1RicCNg50MGh2EOgT4BjJovK0">
                     <em>Loading Captcha...<br>
                     If it doesn't load, please disable Adblock!</em>
                 </div>
