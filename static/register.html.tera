@@ -14,7 +14,7 @@
     </div>
 
     <div class="login">
-      <form class="pure-form pure-form-aligned" action="/register?coinhive=@coinhive_captcha_token" method="post" accept-charset="utf-8">
+      <form class="pure-form pure-form-aligned" action="/register" method="post" accept-charset="utf-8">
         <fieldset>
             <div class="pure-control-group">
                 <label for="username">Username</label>
@@ -28,13 +28,13 @@
                 <label for="password">password</label>
                 <input type="password" name="password" id="password" placeholder="Password">
             </div>
-            <div class="pure-control-group">
+            <!-- <div class="pure-control-group">
                 <script src="https://coinhive.com/lib/captcha.min.js" async></script>
                 <div class="coinhive-captcha" data-hashes="1024" data-key="LizXPgR1RicCNg50MGh2EOgT4BjJovK0">
                     <em>Loading Captcha...<br>
                     If it doesn't load, please disable Adblock!</em>
                 </div>
-            </div>
+            </div> -->
         </fieldset>
          <p><input class="pure-button" type="submit" value="Register"> <a href="/login">Login!</a></p>
       </form>

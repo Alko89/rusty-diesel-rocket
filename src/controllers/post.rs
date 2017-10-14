@@ -6,6 +6,7 @@ use rocket::request::{Form, FlashMessage};
 use rocket::response::{Flash, Redirect};
 use rocket_contrib::{Template};
 use tera::Context;
+use std::collections::HashMap;
 
 use ::db;
 use ::models::post::Post;

@@ -46,7 +46,9 @@ fn main() {
             post_controller::update_post
         ])
         .mount("/api", routes![
-            api_controller::get_balance])
+            api_controller::user_balance,
+            api_controller::stats_payout
+        ])
         .attach(Template::fairing())
         .launch();
 }
