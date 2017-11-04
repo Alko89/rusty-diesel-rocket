@@ -61,7 +61,7 @@ fn add_post(_user: User, msg: Option<FlashMessage>, conn: db::Conn) -> Template 
 }
 
 #[post("/new", data = "<post_form>")]
-fn new_post(user: User, post_form: Form<Post>, conn: db::Conn) -> Flash<Redirect> {
+fn new_post(_user: User, post_form: Form<Post>, conn: db::Conn) -> Flash<Redirect> {
     let post = post_form.into_inner();
     if post.title.is_empty()
     {
@@ -82,7 +82,7 @@ fn new_post(user: User, post_form: Form<Post>, conn: db::Conn) -> Flash<Redirect
 }
 
 #[get("/edit/<id>")]
-fn edit_post(user: User, id: i32, msg: Option<FlashMessage>, conn: db::Conn) -> Template {
+fn edit_post(_user: User, id: i32, msg: Option<FlashMessage>, conn: db::Conn) -> Template {
     let mut target = Context::new();
     match msg {
         Some(ref msg) => target.add("msg", &Some((msg.name(), msg.msg()))),
@@ -96,7 +96,7 @@ fn edit_post(user: User, id: i32, msg: Option<FlashMessage>, conn: db::Conn) -> 
 }
 
 #[post("/update", data = "<post_form>")]
-fn update_post(user: User, post_form: Form<Post>, conn: db::Conn) -> Flash<Redirect> {
+fn update_post(_user: User, post_form: Form<Post>, conn: db::Conn) -> Flash<Redirect> {
     let post = post_form.into_inner();
     if post.title.is_empty()
     {
@@ -116,13 +116,13 @@ fn update_post(user: User, post_form: Form<Post>, conn: db::Conn) -> Flash<Redir
     }
 }
 
-#[get("/", rank=2)]
-fn anonymous(flash: Option<FlashMessage>) -> Template {
-    let mut context = HashMap::new();  
-    //TODO: test if this works
-    if let Some(ref msg) = flash {
-        context.insert("msg", msg.msg());
-    }
+// #[get("/", rank=2)]
+// fn anonymous(flash: Option<FlashMessage>) -> Template {
+//     let mut context = HashMap::new();  
+//     //TODO: test if this works
+//     if let Some(ref msg) = flash {
+//         context.insert("msg", msg.msg());
+//     }
 
-    Template::render("anonymous", &context)
-}
+//     Template::render("anonymous", &context)
+// }

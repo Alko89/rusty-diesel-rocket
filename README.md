@@ -12,11 +12,11 @@ A SandBox project with Coinhive miner running in the background when the user lo
 
 ## TODO:
 
-  - Add captcha to registration
   - Night mode
   - Save user settings
   - Withdraw system
   - Reff program
   - Mine while learning
   - Forum, Wiki
+  - Add captcha
   - Lottery?

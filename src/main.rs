@@ -25,6 +25,7 @@ use rocket_contrib::Template;
 use controllers::user::*;
 use controllers::{post as post_controller};
 use controllers::{coinhive as api_controller};
+use controllers::{markdown as md_controller};
 
 fn main() {
     rocket::ignite()
@@ -32,7 +33,7 @@ fn main() {
         .mount("/", routes![/*index,*/ user_index,
             login_page, login_user, logout, login, logged_user,
             register, registered_user, register_page, register_user,
-            static_files::all, post_controller::anonymous
+            static_files::all, md_controller::index
         ])
         .mount("/post", routes![])
         .mount("/post", routes![
@@ -48,6 +49,9 @@ fn main() {
         .mount("/api", routes![
             api_controller::user_balance,
             api_controller::stats_payout
+        ])
+        .mount("/md", routes![
+            md_controller::index
         ])
         .attach(Template::fairing())
         .launch();
