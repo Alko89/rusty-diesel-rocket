@@ -14,7 +14,6 @@ use std::io::prelude::*;
 fn index() -> Template {
     let mut context = Context::new();
 
-
     let mut f = File::open("static/md/test.md").expect("file not found");
 
     let mut c = String::new();

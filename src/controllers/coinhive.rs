@@ -16,7 +16,7 @@ fn user_balance(name: String) -> Json<Value> {
     match req {
         Ok(mut res) => {
             let mut body = String::new();
-            res.read_to_string(&mut body);
+            res.read_to_string(&mut body).expect("Error reading Coinhive JSON response");
 
             Json(serde_json::from_str(&body).unwrap())
         },
@@ -31,7 +31,7 @@ fn stats_payout() -> Json<Value> {
     match req {
         Ok(mut res) => {
             let mut body = String::new();
-            res.read_to_string(&mut body);
+            res.read_to_string(&mut body).expect("Error reading Coinhive JSON response");
 
             Json(serde_json::from_str(&body).unwrap())
         },
