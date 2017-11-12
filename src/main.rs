@@ -26,11 +26,13 @@ use controllers::user::*;
 use controllers::{post as post_controller};
 use controllers::{coinhive as api_controller};
 use controllers::{markdown as md_controller};
+use controllers::{react as react_controller};
 
 fn main() {
     rocket::ignite()
         .manage(db::establish_connection())
-        .mount("/", routes![/*index,*/ user_index,
+        .mount("/", routes![/*index,*/ 
+            react_controller::index,
             login_page, login_user, logout, login, logged_user,
             register, registered_user, register_page, register_user,
             static_files::all, md_controller::index
@@ -48,10 +50,15 @@ fn main() {
         ])
         .mount("/api", routes![
             api_controller::user_balance,
-            api_controller::stats_payout
+            api_controller::stats_payout,
+            api_controller::user_stats,
+            api_controller::anon_stats
         ])
         .mount("/md", routes![
             md_controller::index
+        ])
+        .mount("/react", routes![
+            react_controller::index
         ])
         .attach(Template::fairing())
         .launch();

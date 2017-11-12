@@ -42,18 +42,17 @@ The content `<div>` is where all your content goes.
 .content {
     margin: 0 auto;
     padding: 0 2em;
-    max-width: 720px;
+    max-width: 800px;
     margin-bottom: 50px;
     line-height: 1.6em;
 }
 
 .header {
-     margin: 0 auto;
+     margin: 0;
      color: #333;
      text-align: center;
      padding: 2.5em 2em 0;
      border-bottom: 1px solid #eee;
-     max-width: 720px;
  }
     .header h1 {
         margin: 0.2em 0;
