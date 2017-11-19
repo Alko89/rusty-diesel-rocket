@@ -84,6 +84,19 @@ export default class CoinhiveUser extends React.Component {
                         { this.state.error }
                     </div>
                 </div>
+                {/* <div className="pure-u-1 pure-u-sm-1-2">
+                    <div className="coinhive-miner"
+                            data-key="LizXPgR1RicCNg50MGh2EOgT4BjJovK0"
+                            data-user={ this.state.name }
+                            data-autostart="true" >
+                        <em>Please disable Adblock!</em>
+                    </div>
+                </div> */}
+                <div className="pure-u-1">
+                        <form className="pure-form" action="/logout" method="post" acceptCharset="utf-8">
+                                <input className="pure-button" type="submit" name="logout" id="logout" value="logout" />
+                        </form>
+                </div>
                 </div>
             </div>
         )

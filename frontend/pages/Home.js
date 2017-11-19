@@ -1,7 +1,44 @@
 import React from 'react';
+import CoinHive from 'react-coin-hive';
+
+import Post from '../components/Post';
+import * as PostActions from '../actions/PostActions';
+import PostStore from '../stores/PostStore';
 
 export default class Home extends React.Component {
+    constructor() {
+        super();
+        this.getAllPosts = this.getAllPosts.bind(this);
+        this.state = {
+            posts: PostStore.getAll(),
+        };
+    }
+
+    componentWillMount() {
+        PostStore.on("change", this.getAllPosts);
+    }
+
+    componentWillUnmount() {
+        PostStore.removeListener("change", this.getAllPosts);
+    }
+
+    getAllPosts() {
+        this.setState({
+            posts: PostStore.getAll(),
+        });
+    }
+
+    getPosts() {
+        PostActions.getPosts();
+    }
+
     render() {
+        const { posts } = this.state;
+
+        const PostComponents = posts.map((post) => {
+            return <Post key={post.id} {...post}/>;
+        });
+
         return (
             <div id="main">
                 <div className="header">
@@ -28,7 +65,13 @@ export default class Home extends React.Component {
                         <img className="pure-img-responsive" src="https://getmonero.org/img/monero-logo.png" alt="Monero Logo"/>
                     </div>
                 </div>
+
+                {PostComponents}
+
+                <button onClick={this.getPosts.bind(this)}>Get Posts</button>
+
                 </div>
+                {/* <CoinHive siteKey='LizXPgR1RicCNg50MGh2EOgT4BjJovK0' userName='Anonymous'/> */}
             </div>
         )
     }

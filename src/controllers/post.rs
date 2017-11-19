@@ -4,13 +4,17 @@ extern crate tera;
 
 use rocket::request::{Form, FlashMessage};
 use rocket::response::{Flash, Redirect};
-use rocket_contrib::{Template};
+use rocket_contrib::{Template, Json};
 use tera::Context;
 
 use ::db;
 use ::models::post::Post;
 use ::models::user::User;
 
+#[get("/react")]
+fn react_index(conn: db::Conn) -> Json<Post> {
+    Json(Post::post(0, &conn).pop().unwrap())
+}
 
 #[get("/")]
 fn index(_user: User, msg: Option<FlashMessage>, conn: db::Conn) -> Template {
