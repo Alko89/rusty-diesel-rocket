@@ -93,9 +93,9 @@ export default class CoinhiveUser extends React.Component {
                     </div>
                 </div> */}
                 <div className="pure-u-1">
-                        <form className="pure-form" action="/logout" method="post" acceptCharset="utf-8">
-                                <input className="pure-button" type="submit" name="logout" id="logout" value="logout" />
-                        </form>
+                    <form className="pure-form" action="/logout" method="post" acceptCharset="utf-8">
+                        <input className="pure-button" type="submit" name="logout" id="logout" value="logout" />
+                    </form>
                 </div>
                 </div>
             </div>
