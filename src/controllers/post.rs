@@ -1,20 +1,51 @@
 extern crate rocket;
 extern crate rocket_contrib;
 extern crate tera;
+extern crate serde_json;
 
 use rocket::request::{Form, FlashMessage};
 use rocket::response::{Flash, Redirect};
 use rocket_contrib::{Template, Json};
 use tera::Context;
+use serde_json::Value;
 
 use ::db;
 use ::models::post::Post;
 use ::models::user::User;
 
+
+/*** REACT EXPERIMENT ***/
 #[get("/react")]
 fn react_index(conn: db::Conn) -> Json<Post> {
     Json(Post::post(0, &conn).pop().unwrap())
 }
+
+#[derive(Serialize)]
+struct UserJson {
+    id: i32,
+    name: String
+}
+
+#[get("/user")]
+fn user(user: User) -> Json<UserJson> {
+    let user_json = UserJson {
+        id: user.id,
+        name: user.username
+    };
+
+    Json(user_json)
+}
+
+#[get("/user", rank = 2)]
+fn anon_user() -> Json<Value> {
+    let user_json = r#"{
+        "id": null,
+        "name": "Anonymous"
+    }"#;
+
+    Json(serde_json::from_str(user_json).unwrap())
+}
+/*** END REACT EXPERIMENT ***/
 
 #[get("/")]
 fn index(_user: User, msg: Option<FlashMessage>, conn: db::Conn) -> Template {

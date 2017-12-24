@@ -6,10 +6,10 @@ authors = ["Alko89 <alefer89@gmail.com>"]
 [dependencies]
 rocket = { git = "https://github.com/SergioBenitez/Rocket" }
 dotenv = "0.10"
-diesel = { version = "0.14", features = ["postgres"] }
-diesel_codegen = { version = "0.14", features = ["postgres"] }
+diesel = { version = "0.16", features = ["postgres"] }
+diesel_codegen = { version = "0.16", features = ["postgres"] }
 r2d2 = "0.7"
-r2d2-diesel = "0.14"
+r2d2-diesel = "0.16"
 rust-argon2 = "0.2"
 rand = "0.3"
 serde = "1.0"

@@ -1,9 +1,25 @@
 import React from 'react';
-import $ from 'jquery';
+import { connect } from "react-redux";
 
 import Menu from '../components/Menu';
 
+import { fetchUser } from "../actions/UserActions"
+
+@connect((store) => {
+  return {
+    user: store.user.user
+  };
+})
+
 export default class Layout extends React.Component {
+    componentWillMount() {
+        this.props.dispatch(fetchUser())
+    }
+
+    fetchUser() {
+        this.props.dispatch(fetchUser())
+    }
+
     render() {
         const { location } = this.props;
 

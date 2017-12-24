@@ -55,7 +55,9 @@ fn main() {
             api_controller::anon_stats
         ])
         .mount("/react", routes![
-            react_controller::index
+            react_controller::index,
+            post_controller::user,
+            post_controller::anon_user
         ])
         .attach(Template::fairing())
         .launch();
