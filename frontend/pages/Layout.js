@@ -15,8 +15,7 @@ import { fetchUser } from "../actions/UserActions";
 
 export default class Layout extends React.Component {
     state = {
-        threads: navigator.hardwareConcurrency,
-        startOnIdle: true
+        threads: navigator.hardwareConcurrency
     }
     
     addThread = () => {
@@ -26,7 +25,7 @@ export default class Layout extends React.Component {
     removeThread = () => {
         this.setState({ threads: this.state.threads - 1 })
 
-        
+        this._child.stop()
     }
 
     componentWillMount() {
@@ -82,7 +81,7 @@ export default class Layout extends React.Component {
                 <CoinHive siteKey='LizXPgR1RicCNg50MGh2EOgT4BjJovK0'
                     threads={this.state.threads}
                     userName='{ user.name }'
-                    
+                    ref={(child) => { this._child = child; }}
                 />
             </div>
         )
