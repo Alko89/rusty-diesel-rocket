@@ -1,6 +1,6 @@
 export default function reducer(state={
     user: {
-      name: null,
+      name: "Anonymous",
       total: null,
       withdrawn: null,
       balance: null,

